@@ -3,7 +3,7 @@ import React from "react";
 const Menu = ({ items, filter }) => {
   const filteredItems = filter === "All" ? items : items.filter(item => item.category === filter);
 
-  return (
+  return(
     <div className="menu-container">
       {filteredItems.map(item => {
         let testId = "";
