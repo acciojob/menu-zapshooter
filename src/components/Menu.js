@@ -1,20 +1,25 @@
-import React from "react";
+import React from 'react';
 
-const Menu = ({ items, filter }) => {
-  const filteredItems = filter === "All" ? items : items.filter(item => item.category === filter);
-
-  return(
-    <div className="menu-container">
-      {filteredItems.map(item => {
-        let testId = "";
-        if (item.category === "Breakfast") testId = "menu-item-breakfast";
-        if (item.category === "Lunch") testId = "menu-item-lunch";
-        if (item.category === "Shakes") testId = "menu-item-shakes";
+function Menu({ items, selectedCategory }) {
+  return (
+    <div className="menu">
+      {items.map((item) => {
+        const dataTestId =
+          item.category === 'Breakfast'
+            ? 'menu-item-breakfast'
+            : item.category === 'Lunch'
+            ? 'menu-item-lunch'
+            : 'menu-item-shakes';
 
         return (
-          <div key={item.id} className="menu-item" data-test-id={testId}>
-            <img src={item.image} alt={item.name} />
+          <div
+            key={item.id}
+            data-test-id={dataTestId}
+            className={`menu-item menu-item-${item.category.toLowerCase()}`}
+            style={{ border: '1px solid #ccc', margin: '10px', padding: '10px' }}
+          >
             <h3>{item.name}</h3>
+            <img src={item.image} alt={item.name} width="150" />
             <p>Category: {item.category}</p>
             <p>Price: {item.price}</p>
           </div>
@@ -22,6 +27,6 @@ const Menu = ({ items, filter }) => {
       })}
     </div>
   );
-};
+}
 
 export default Menu;
