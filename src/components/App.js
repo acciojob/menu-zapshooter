@@ -1,31 +1,89 @@
-import React, { useState } from "react";
-import Menu from "./Menu";
-import "../styles/App.css";
+import React, { useState } from 'react';
 
-const App = () => {
-  const menuItems = [
-    { id: 1, name: "Pancakes", category: "Breakfast", price: "$5", image: "https://via.placeholder.com/100" },
-    { id: 2, name: "Omelette", category: "Breakfast", price: "$4", image: "https://via.placeholder.com/100" },
-    { id: 3, name: "Burger", category: "Lunch", price: "$8", image: "https://via.placeholder.com/100" },
-    { id: 4, name: "Pizza", category: "Lunch", price: "$10", image: "https://via.placeholder.com/100" },
-    { id: 5, name: "Chocolate Shake", category: "Shakes", price: "$6", image: "https://via.placeholder.com/100" },
-    { id: 6, name: "Vanilla Shake", category: "Shakes", price: "$6", image: "https://via.placeholder.com/100" },
-  ];
+const menuItems = [
+  {
+    id: 1,
+    name: 'Pancakes',
+    category: 'Breakfast',
+    price: '$5',
+    image: 'https://via.placeholder.com/150',
+  },
+  {
+    id: 2,
+    name: 'Burger',
+    category: 'Lunch',
+    price: '$10',
+    image: 'https://via.placeholder.com/150',
+  },
+  {
+    id: 3,
+    name: 'Chocolate Shake',
+    category: 'Shakes',
+    price: '$7',
+    image: 'https://via.placeholder.com/150',
+  },
+  {
+    id: 4,
+    name: 'Omelette',
+    category: 'Breakfast',
+    price: '$6',
+    image: 'https://via.placeholder.com/150',
+  },
+  {
+    id: 5,
+    name: 'Grilled Cheese',
+    category: 'Lunch',
+    price: '$8',
+    image: 'https://via.placeholder.com/150',
+  },
+  {
+    id: 6,
+    name: 'Vanilla Shake',
+    category: 'Shakes',
+    price: '$6',
+    image: 'https://via.placeholder.com/150',
+  },
+];
 
-  const [filter, setFilter] = useState("All");
+function App() {
+  const [selectedCategory, setSelectedCategory] = useState('All');
+
+  const filteredItems =
+    selectedCategory === 'All'
+      ? menuItems
+      : menuItems.filter(item => item.category === selectedCategory);
 
   return (
     <div id="main">
-      <h1>Menu Application</h1>
-      <div className="filter-buttons">
-        <button id="filter-btn-1" onClick={() => setFilter("Breakfast")}>Breakfast</button>
-        <button id="filter-btn-2" onClick={() => setFilter("Lunch")}>Lunch</button>
-        <button id="filter-btn-3" onClick={() => setFilter("Shakes")}>Shakes</button>
-        <button onClick={() => setFilter("All")}>All</button>
+      <h1>Menu</h1>
+      <div>
+        <button id="filter-btn-1" onClick={() => setSelectedCategory('Breakfast')}>
+          Breakfast
+        </button>
+        <button id="filter-btn-2" onClick={() => setSelectedCategory('Lunch')}>
+          Lunch
+        </button>
+        <button id="filter-btn-3" onClick={() => setSelectedCategory('Shakes')}>
+          Shakes
+        </button>
       </div>
-      <Menu items={menuItems} filter={filter} />
+
+      <div className="menu">
+        {filteredItems.map(({ id, name, category, price, image }) => (
+          <div
+            key={id}
+            data-test-id={`menu-item-${category.toLowerCase()}`}
+            className={`menu-item menu-item-${category.toLowerCase()}`}
+            style={{ border: '1px solid #ccc', margin: 10, padding: 10 }}
+          >
+            <h3>{name}</h3>
+            <img src={image} alt={name} width={150} />
+            <p>Price: {price}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
-};
+}
 
 export default App;
